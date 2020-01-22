@@ -61,7 +61,8 @@ class GUI: Application() {
             cont.startStopAudioPlayer()
         }
 
-        cont.linkGithub.style = "-fx-font-size: 17px"
+        cont.linkGithub.border = Border.EMPTY
+        cont.linkGithub.style = "-fx-font-size: 17px; -fx-text-fill: #3366BB"
         cont.linkGithub.setOnMouseClicked { cont.openGitHub() }
 
         val gridMenu = GridPane()
