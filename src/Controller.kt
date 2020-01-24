@@ -39,6 +39,7 @@ class Controller {
     val crazyFacePane = Pane()
     val locationsViewer = ImageView()
     val password = TextField()
+    val infoLabelPane = Pane()
     val infoLabel = Label()
     val item1 = ImageView()
     val item2 = ImageView()
@@ -61,20 +62,16 @@ class Controller {
     // load progress from save.txt
     // returns true if loading was successful
     fun continueGame(): Boolean {
-        val input = saveFile.readText()
-        return if (verifySave(input)) {
-            model.loadGameFromSaveFile(input.split(" ").map{ it.toInt() })
+        return if (model.loadGameFromSaveFile(saveFile.readText())) {
             updateGUI()
             true
         } else {
-            guiDialog.showError("Fail. Save-file is corrupt.")
+            guiDialog.showError("Fail. Save-file is corrupted.")
             false
         }
     }
 
     fun isThereSaveFile() = saveFile.exists()
-
-    private fun verifySave(str: String) = str.matches(Regex("([0-9]+ ){37}[0-9]+"))
 
     // save progress to save.txt
     private fun saveGame() {
@@ -126,9 +123,10 @@ class Controller {
             // some comments from the main character
             if (model.getSpeech() != null) {
                 infoLabel.text = model.getSpeech()
+                infoLabelPane.isVisible = true
                 model.speechLabelShowed()
             } else {
-                infoLabel.text = ""
+                infoLabelPane.isVisible = false
             }
         }
 
@@ -177,6 +175,7 @@ class Controller {
 
     fun mouseIsAboveItem1() {
         infoLabel.text = getDescriptionOfObject(0)
+        infoLabelPane.isVisible = infoLabel.text != ""
     }
 
     fun clickedOnItem2() {
@@ -186,6 +185,7 @@ class Controller {
 
     fun mouseIsAboveItem2() {
         infoLabel.text = getDescriptionOfObject(1)
+        infoLabelPane.isVisible = infoLabel.text != ""
     }
 
     fun clickedOnItem3() {
@@ -195,6 +195,7 @@ class Controller {
 
     fun mouseIsAboveItem3() {
         infoLabel.text = getDescriptionOfObject(2)
+        infoLabelPane.isVisible = infoLabel.text != ""
     }
 
     fun clickedOnItem4() {
@@ -204,6 +205,7 @@ class Controller {
 
     fun mouseIsAboveItem4() {
         infoLabel.text = getDescriptionOfObject(3)
+        infoLabelPane.isVisible = infoLabel.text != ""
     }
 
     fun clickedOnItem5() {
@@ -213,6 +215,7 @@ class Controller {
 
     fun mouseIsAboveItem5() {
         infoLabel.text = getDescriptionOfObject(4)
+        infoLabelPane.isVisible = infoLabel.text != ""
     }
 
     fun clickedOnItem6() {
@@ -222,6 +225,7 @@ class Controller {
 
     fun mouseIsAboveItem6() {
         infoLabel.text = getDescriptionOfObject(5)
+        infoLabelPane.isVisible = infoLabel.text != ""
     }
 
     fun clickedOnItem7() {
@@ -231,6 +235,7 @@ class Controller {
 
     fun mouseIsAboveItem7() {
         infoLabel.text = getDescriptionOfObject(6)
+        infoLabelPane.isVisible = infoLabel.text != ""
     }
 
     private fun getDescriptionOfObject(number: Int): String {
@@ -254,7 +259,7 @@ class Controller {
         }
     }
 
-    fun cleanInfoLabel() { infoLabel.text = "" }
+    fun hideInfoLabel() { infoLabelPane.isVisible = false }
 
     fun getPassword(str: String) { if (model.passwords(str)) updateGUI() }
 
@@ -284,7 +289,7 @@ class Controller {
         val sounds = MP3Player()
 
         val name = when (number) {
-            1 -> "shortSound"
+            1 -> "take"
             2 -> "ladder"
             else -> "applause"
         }

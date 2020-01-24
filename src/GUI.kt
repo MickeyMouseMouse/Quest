@@ -114,15 +114,17 @@ class GUI: Application() {
         cont.password.isVisible = false
         cont.password.setOnKeyReleased { cont.getPassword(cont.password.text) }
 
-        cont.infoLabel.layoutX = 0.0
-        cont.infoLabel.layoutY = 485.0
         cont.infoLabel.minWidth = 750.0
         cont.infoLabel.alignment = Pos.CENTER
         cont.infoLabel.style = "-fx-font-size: 20px; -fx-text-fill: white"
+        cont.infoLabelPane.children.add(cont.infoLabel)
+        cont.infoLabelPane.layoutX = 0.0
+        cont.infoLabelPane.layoutY = 485.0
+        cont.infoLabelPane.style = "-fx-background-color: black"
 
 
         cont.mainPane.children.addAll(cont.locationsViewer, cont.password,
-            cont.infoLabel)
+            cont.infoLabelPane)
         cont.mainPane.setOnMouseClicked { cont.click(it.x.toInt(), it.y.toInt()) }
 
         cont.crazyFacePane.isVisible = false
@@ -130,31 +132,31 @@ class GUI: Application() {
         val inventory = HBox()
         cont.item1.setOnMouseClicked { cont.clickedOnItem1() }
         cont.item1.setOnMouseEntered { cont.mouseIsAboveItem1() }
-        cont.item1.setOnMouseExited { cont.cleanInfoLabel() }
+        cont.item1.setOnMouseExited { cont.hideInfoLabel() }
 
         cont.item2.setOnMouseClicked { cont.clickedOnItem2() }
         cont.item2.setOnMouseEntered { cont.mouseIsAboveItem2() }
-        cont.item2.setOnMouseExited { cont.cleanInfoLabel() }
+        cont.item2.setOnMouseExited { cont.hideInfoLabel() }
 
         cont.item3.setOnMouseClicked { cont.clickedOnItem3() }
         cont.item3.setOnMouseEntered { cont.mouseIsAboveItem3() }
-        cont.item3.setOnMouseExited { cont.cleanInfoLabel() }
+        cont.item3.setOnMouseExited { cont.hideInfoLabel() }
 
         cont.item4.setOnMouseClicked { cont.clickedOnItem4() }
         cont.item4.setOnMouseEntered { cont.mouseIsAboveItem4() }
-        cont.item4.setOnMouseExited { cont.cleanInfoLabel() }
+        cont.item4.setOnMouseExited { cont.hideInfoLabel() }
 
         cont.item5.setOnMouseClicked { cont.clickedOnItem5() }
         cont.item5.setOnMouseEntered { cont.mouseIsAboveItem5() }
-        cont.item5.setOnMouseExited { cont.cleanInfoLabel() }
+        cont.item5.setOnMouseExited { cont.hideInfoLabel() }
 
         cont.item6.setOnMouseClicked { cont.clickedOnItem6() }
         cont.item6.setOnMouseEntered { cont.mouseIsAboveItem6() }
-        cont.item6.setOnMouseExited { cont.cleanInfoLabel() }
+        cont.item6.setOnMouseExited { cont.hideInfoLabel() }
 
         cont.item7.setOnMouseClicked { cont.clickedOnItem7() }
         cont.item7.setOnMouseEntered { cont.mouseIsAboveItem7() }
-        cont.item7.setOnMouseExited { cont.cleanInfoLabel() }
+        cont.item7.setOnMouseExited { cont.hideInfoLabel() }
 
         cont.buttonMerge.minHeight = 50.0
         cont.buttonMerge.style = "-fx-font-size: 20px"
@@ -220,7 +222,8 @@ class GUI: Application() {
         crazyFace.face.layoutY = 280.0
 
         crazyFace.startButton.layoutX = 340.0
-        crazyFace.startButton.layoutY = 175.0
+        crazyFace.startButton.layoutY = 160.0
+        crazyFace.startButton.minWidth = 90.0
         crazyFace.startButton.style = "-fx-font-size: 20px"
 
         crazyFace.scoreLabel.layoutX = 350.0

@@ -88,7 +88,34 @@ class Model {
         door3Opened = false
     }
 
-    fun loadGameFromSaveFile(savedData: List<Int>) {
+    private fun verifySave(save: String): MutableList<Int> {
+        val result = mutableListOf<Int>()
+
+        if (!save.matches(Regex("([0-9]+ ){37}[0-9]+"))) return result
+
+        result.addAll(save.split(" ").map{ it.toInt() })
+
+        for (i in result.indices) {
+            when (i) {
+                0 -> if (result[i] !in 1..48) result.clear()
+
+                1, 3, 5, 7, 9, 11, 13 ->
+                    if (result[i] !in 0..15) result.clear()
+
+                2, 4, 6, 8, 10, 12, 14, in 15..37 ->
+                    if (result[i] !in 0..1) result.clear()
+            }
+
+            if (result.size == 0) break
+        }
+
+        return result
+    }
+
+    fun loadGameFromSaveFile(save: String): Boolean {
+        val savedData = verifySave(save)
+        if (savedData.size == 0) return false
+
         gameStatus = 1
 
         locationNumber = savedData[0]
@@ -124,6 +151,8 @@ class Model {
         iPadUnlock = savedData[35] != 0
         crazyFaceCompleted = savedData[36] != 0
         door3Opened = savedData[37] != 0
+
+        return true
     }
 
     // returns true if the GUI needs to be updated
@@ -597,7 +626,7 @@ class Model {
                         removeFromInventory(12)
                         addToInventory(2)
                     } else {
-                        speech = "There is something in the fireplace. I can't take it with my hands."
+                        speech = "There's something in the back of the fireplace."
                     }
                 }
             }
