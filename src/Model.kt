@@ -6,7 +6,7 @@ class Model {
     private var gameStatus = 0
 
     private var locationNumber by Delegates.notNull<Int>()
-    private var locationTmp = 1
+    private var locationTmp by Delegates.notNull<Int>()
 
     // 7 cells for items
     // first number = item
@@ -151,6 +151,8 @@ class Model {
         iPadUnlock = savedData[35] != 0
         crazyFaceCompleted = savedData[36] != 0
         door3Opened = savedData[37] != 0
+
+        locationTmp = if (box) 2 else 1
 
         return true
     }
